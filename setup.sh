@@ -13,13 +13,32 @@
 
 #### Functions
 
-
 cleandb ()
 {
 	read -p "Enter database name [lportal]: " db_name
 	db_name=${db_name:-lportal}
 	echo -e "\e[44mOkay! I will drop $db_name and recreate it.\e[0m"
 	mysql -e "DROP DATABASE if exists $db_name; create database $db_name character set utf8;"
+}
+
+cleanmaster ()
+{
+# Clean out old copy
+	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
+	rm -rf $cwd/master
+	mkdir -p master
+
+# Copy the new bundle
+	echo -e "\e[44mCopying it over to the working directory [$cwd]/master\e[0m"
+	cp -r $cwd/bundles/master/liferay-portal-master/* $cwd/master
+	echo -e "\e[44mCopying a basic portal-ext.properties over\e[0m"
+	cp -r $cwd/resources/portal-ext.properties $cwd/master
+
+# Clear the database and create
+	echo -e "\e[44mLets clear the database\e[0m"
+	cleandb
+	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
+	notify-send "The bundle is ready for testing!"
 }
 
 createdb ()
@@ -84,7 +103,7 @@ dlmaster ()
 	cp -r $cwd/bundles/master/liferay-portal-master/* $cwd/master
 	echo -e "\e[44mCopying a basic portal-ext.properties over\e[0m"
 	cp -r $cwd/resources/portal-ext.properties $cwd/master
-	echo -e "\e[44mThe bundle is ready for testing."
+	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
 	notify-send "The bundle is ready for testing!"
 }
 
@@ -147,6 +166,7 @@ usage ()
 	----------
 
 	cleandb            - Cleans the database if it already exists
+	cleanmaster        - Doesn't download, just cleans up completely
 	createdb           - Creates the database
 	dl71               - Downloads the 7.1 CE GA3
 	dlmaster           - Downloads the latest master
