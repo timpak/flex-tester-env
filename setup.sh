@@ -135,9 +135,9 @@ rstaging ()
 	echo -e "\e[44mCopying it over to the working directory [$cwd]/master-live\e[0m"
 	cp -r $cwd/bundles/master/liferay-portal-master/* $cwd/master-live
 	echo -e "\e[44mCopying properties for staged\e[0m"
-	cp -r $cwd/resources/staged-ext.properties $cwd/master-staged
-	echo -e "\e[44mCopying properties for staged\e[0m"
-	cp -r $cwd/resources/live-ext.properties $cwd/master-live
+	cp -r $cwd/resources/staged-ext.properties $cwd/master-staged/portal-ext.properties
+	echo -e "\e[44mCopying properties for live\e[0m"
+	cp -r $cwd/resources/live-ext.properties $cwd/master-live/portal-ext.properties
 
 # Replace server.xml on live
 	echo -e "\e[44mReplacing server.xml on master-live.\e[0m"
