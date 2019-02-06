@@ -220,7 +220,7 @@ usage ()
 	clean              - Deletes everything except bundles, resources and setup.sh
 	cleandb            - Cleans the database if it already exists
 	cleanmaster        - Doesn't download, just cleans up completely
-	cluster			   - Sets up a clean 2 cluster node
+	cluster		   - Sets up a clean 2 cluster node
 	createdb           - Creates the database
 	dl71               - Downloads the 7.1 CE GA3
 	dlmaster           - Downloads the latest master
