@@ -13,6 +13,12 @@
 
 #### Functions
 
+clean ()
+{
+	echo -e "\e[44mDeletes everything but bundles, resources and setup.sh\e[0m"
+	rm -rf `ls | grep -v "bundles\|resources\|setup.sh"`
+}
+
 cleandb ()
 {
 	read -p "Enter database name [lportal]: " db_name
@@ -25,7 +31,7 @@ cleanmaster ()
 {
 # Clean out old copy
 	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
-	rm -rf $cwd/master
+	clean
 	mkdir -p master
 
 # Copy the new bundle
@@ -41,6 +47,49 @@ cleanmaster ()
 	notify-send "The bundle is ready for testing!"
 }
 
+cluster ()
+{
+	# Clean out old copy
+	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
+	clean
+
+# Create directories that will be used
+	echo -e "\e[44mCreating folders for bundle backup if they don't exist\e[0m"
+	mkdir -p node-1
+	mkdir -p node-2
+
+# Check if a new master snapshot exists and download it
+	echo -e "\e[44mDownloading the master snapshot if its updated\e[0m"
+	wget -c -N https://releases.liferay.com/portal/snapshot-master/latest/liferay-portal-tomcat-master.7z -P $cwd/bundles/master
+	echo -e "\e[44mDone downloading or checking\e[0m"
+
+# Extract the new bundle and make two copies
+	echo -e "\e[44mDeleting old bundle if it exists\e[0m"
+	rm -rf $cwd/bundles/master/liferay-portal-master
+	echo -e "\e[44mExtracting the master bundle\e[0m"
+	7z x $cwd/bundles/master/liferay-portal-tomcat-master.7z -O$cwd/bundles/master
+	echo -e "\e[44mCopying it over to the working directory [$cwd]/node-1\e[0m"
+	cp -r $cwd/bundles/master/liferay-portal-master/* $cwd/node-1
+	echo -e "\e[44mCopying it over to the working directory [$cwd]/node-2\e[0m"
+	cp -r $cwd/bundles/master/liferay-portal-master/* $cwd/node-2
+	echo -e "\e[44mCopying properties for node-1\e[0m"
+	cp -r $cwd/resources/single-cluster-ext.properties $cwd/node-1/portal-ext.properties
+	echo -e "\e[44mCopying properties for node-2\e[0m"
+	cp -r $cwd/resources/single-cluster-ext.properties $cwd/node-2/portal-ext.properties
+
+# Replace server.xml on live
+	echo -e "\e[44mReplacing server.xml on node-2.\e[0m"
+	rm -rf $cwd/node-2/tomcat-9.0.10/conf/server.xml
+	cp -r $cwd/resources/server.xml $cwd/node-2/tomcat-9.0.10/conf
+
+# Preparing Databases master-staged and master-live
+	echo -e "\e[44mPreparing database for the cluster\e[0m"
+	mysql -e "DROP DATABASE if exists lportal; create database lportal character set utf8;"
+
+	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
+	notify-send "The bundle is ready for testing! Start both node-1 and node-2 concurrently."
+}
+
 createdb ()
 {
 	read -p "Enter database name [lportal]: " db_name
@@ -53,7 +102,7 @@ dl71 ()
 {
 # Clean out old copy
 	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
-	rm -rf $cwd/7.1-ga3
+	clean
 	mkdir -p 7.1-ga3
 
 # Check if 7.1-ga3 has already been downlaoded and if not, download it
@@ -67,6 +116,8 @@ dl71 ()
 		wget -c -N https://releases.liferay.com/portal/7.1.2-ga3/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.7z -P $cwd/bundles/7.1.x
 		echo -e "\e[44mDone downloading or checking\e[0m"
 # Extract the new bundle
+		echo -e "\e[44mDeleting old bundle if it exists\e[0m"
+		rm -rf $cwd/bundles/7.1.x/liferay-ce-portal-7.1.2-ga3
 		echo -e "\e[44mExtracting the 7.1 GA3 bundle\e[0m"
 		7z x $cwd/bundles/7.1.x/liferay-ce-portal-tomcat-7.1.2-ga3-20190107144105508.7z -O$cwd/bundles/7.1.x
 	fi
@@ -83,7 +134,7 @@ dlmaster ()
 # Clean out old copy
 	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
 	rm -rf $cwd/bundles/master/liferay-portal-master
-	rm -rf $cwd/master
+	clean
 
 # Create directories that will be used
 	echo -e "\e[44mCreating folders for bundle backup if they don't exist\e[0m"
@@ -97,6 +148,8 @@ dlmaster ()
 
 
 # Extract the new bundle
+	echo -e "\e[44mDeleting old bundle if it exists\e[0m"
+	rm -rf $cwd/bundles/master/liferay-portal-master
 	echo -e "\e[44mExtracting the master bundle\e[0m"
 	7z x $cwd/bundles/master/liferay-portal-tomcat-master.7z -O$cwd/bundles/master
 	echo -e "\e[44mCopying it over to the working directory [$cwd]/master\e[0m"
@@ -112,9 +165,7 @@ rstaging ()
 # Clean out old copy
 	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
 	rm -rf $cwd/bundles/master/liferay-portal-master
-	rm -rf $cwd/master
-	rm -rf $cwd/master-staged
-	rm -rf $cwd/master-live
+	clean
 
 # Create directories that will be used
 	echo -e "\e[44mCreating folders for bundle backup if they don't exist\e[0m"
@@ -128,6 +179,8 @@ rstaging ()
 	echo -e "\e[44mDone downloading or checking\e[0m"
 
 # Extract the new bundle and make two copies
+	echo -e "\e[44mDeleting old bundle if it exists\e[0m"
+	rm -rf $cwd/bundles/master/liferay-portal-master
 	echo -e "\e[44mExtracting the master bundle\e[0m"
 	7z x $cwd/bundles/master/liferay-portal-tomcat-master.7z -O$cwd/bundles/master
 	echo -e "\e[44mCopying it over to the working directory [$cwd]/master-staged\e[0m"
@@ -148,7 +201,6 @@ rstaging ()
 	echo -e "\e[44mPreparing databases master-staged and master-live\e[0m"
 	mysql -e "DROP DATABASE if exists master_staged; create database master_staged character set utf8;"
 	mysql -e "DROP DATABASE if exists master_live; create database master_live character set utf8;"
-
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
 	notify-send "The bundle is ready for testing!"
 }
@@ -165,8 +217,10 @@ usage ()
 	Parameters
 	----------
 
+	clean              - Deletes everything except bundles, resources and setup.sh
 	cleandb            - Cleans the database if it already exists
 	cleanmaster        - Doesn't download, just cleans up completely
+	cluster			   - Sets up a clean 2 cluster node
 	createdb           - Creates the database
 	dl71               - Downloads the 7.1 CE GA3
 	dlmaster           - Downloads the latest master
