@@ -11,6 +11,11 @@
 # Exceptions
 	set -e
 
+# Check if 7z is installed
+	if ! archiverLocation="$(type -p "7zz")" || [[ -z $archiverLocation ]]; then
+ 		echo -e "\e[101m7z is not installed. Please install 7z and try again.\e[0m"
+	fi
+
 #### Functions
 
 clean ()
