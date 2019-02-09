@@ -36,7 +36,6 @@ cleanmaster ()
 {
 # Clean out old copy
 	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
-	clean
 	mkdir -p master
 
 # Copy the new bundle
@@ -49,6 +48,7 @@ cleanmaster ()
 	echo -e "\e[44mLets clear the database\e[0m"
 	cleandb
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
+	echo -e "\e[44mYou are on Githash: $(cat master/tomcat-9.0.10/.githash)\e[0m"
 	notify-send "The bundle is ready for testing!"
 }
 
@@ -92,6 +92,7 @@ cluster ()
 	mysql -e "DROP DATABASE if exists lportal; create database lportal character set utf8;"
 
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
+	echo -e "\e[44mYou are on Githash: $(cat node-1/tomcat-9.0.10/.githash)\e[0m"
 	notify-send "The bundle is ready for testing! Start both node-1 and node-2 concurrently."
 }
 
@@ -162,6 +163,7 @@ dlmaster ()
 	echo -e "\e[44mCopying a basic portal-ext.properties over\e[0m"
 	cp -r $cwd/resources/portal-ext.properties $cwd/master
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
+	echo -e "\e[44mYou are on Githash: $(cat master/tomcat-9.0.10/.githash)\e[0m"
 	notify-send "The bundle is ready for testing!"
 }
 
@@ -207,6 +209,7 @@ rstaging ()
 	mysql -e "DROP DATABASE if exists master_staged; create database master_staged character set utf8;"
 	mysql -e "DROP DATABASE if exists master_live; create database master_live character set utf8;"
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
+	echo -e "\e[44mYou are on Githash: $(cat master-staged/tomcat-9.0.10/.githash)\e[0m"
 	notify-send "The bundle is ready for testing!"
 }
 
