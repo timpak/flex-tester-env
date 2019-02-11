@@ -98,7 +98,7 @@ cluster ()
 	cp -r $cwd/resources/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config $cwd/node-1/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config
 	cp -r $cwd/resources/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config $cwd/node-2/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config
 	echo -e "\e[44mExtracting elastic search server into [$cwd]/elasticsearch-6.5.4\e[0m"
-	7z x $cwd/resources/elasticsearch-6.5.4.zip -O$cwd
+	cp -r $cwd/resources/elasticsearch-6.5.4 -O$cwd/elasticsearch-6.5.4
 
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
 	echo -e "\e[44mYou are on Githash: $(cat node-1/tomcat-9.0.10/.githash)\e[0m"
