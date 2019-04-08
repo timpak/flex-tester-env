@@ -49,7 +49,7 @@ cleanmaster ()
 	echo -e "\e[44mLets clear the database\e[0m"
 	cleandb
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
-	echo -e "\e[44mYou are on Githash: $(cat master/tomcat-9.0.10/.githash)\e[0m"
+	echo -e "\e[44mYou are on Githash: $(cat master/tomcat-9.0.17/.githash)\e[0m"
 	notify-send "The bundle is ready for testing!"
 }
 
@@ -85,8 +85,8 @@ cluster ()
 
 # Replace server.xml on live
 	echo -e "\e[44mReplacing server.xml on node-2.\e[0m"
-	rm -rf $cwd/node-2/tomcat-9.0.10/conf/server.xml
-	cp -r $cwd/resources/server.xml $cwd/node-2/tomcat-9.0.10/conf
+	rm -rf $cwd/node-2/tomcat-9.0.17/conf/server.xml
+	cp -r $cwd/resources/server.xml $cwd/node-2/tomcat-9.0.17/conf
 
 # Preparing Databases master-staged and master-live
 	echo -e "\e[44mPreparing database for the cluster\e[0m"
@@ -101,7 +101,7 @@ cluster ()
 	cp -r $cwd/resources/elasticsearch-6.5.4 $cwd/elasticsearch-6.5.4
 
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
-	echo -e "\e[44mYou are on Githash: $(cat node-1/tomcat-9.0.10/.githash)\e[0m"
+	echo -e "\e[44mYou are on Githash: $(cat node-1/tomcat-9.0.17/.githash)\e[0m"
 	echo -e "\e[44mTo start elastic search run /elasticsearch-6.5.4/bin/elasticsearch\e[0m"
 	notify-send "The bundle is ready for testing! Start both node-1 and node-2 concurrently."
 }
@@ -173,7 +173,7 @@ dlmaster ()
 	echo -e "\e[44mCopying a basic portal-ext.properties over\e[0m"
 	cp -r $cwd/resources/portal-ext.properties $cwd/master
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
-	echo -e "\e[44mYou are on Githash: $(cat master/tomcat-9.0.10/.githash)\e[0m"
+	echo -e "\e[44mYou are on Githash: $(cat master/tomcat-9.0.17/.githash)\e[0m"
 	notify-send "The bundle is ready for testing!"
 }
 
@@ -211,15 +211,15 @@ rstaging ()
 
 # Replace server.xml on live
 	echo -e "\e[44mReplacing server.xml on master-live.\e[0m"
-	rm -rf $cwd/master-live/tomcat-9.0.10/conf/server.xml
-	cp -r $cwd/resources/server.xml $cwd/master-live/tomcat-9.0.10/conf
+	rm -rf $cwd/master-live/tomcat-9.0.17/conf/server.xml
+	cp -r $cwd/resources/server.xml $cwd/master-live/tomcat-9.0.17/conf
 
 # Preparing Databases master-staged and master-live
 	echo -e "\e[44mPreparing databases master-staged and master-live\e[0m"
 	mysql -e "DROP DATABASE if exists master_staged; create database master_staged character set utf8;"
 	mysql -e "DROP DATABASE if exists master_live; create database master_live character set utf8;"
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
-	echo -e "\e[44mYou are on Githash: $(cat master-staged/tomcat-9.0.10/.githash)\e[0m"
+	echo -e "\e[44mYou are on Githash: $(cat master-staged/tomcat-9.0.17/.githash)\e[0m"
 	notify-send "The bundle is ready for testing!"
 }
 
