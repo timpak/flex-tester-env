@@ -243,6 +243,24 @@ rstaging ()
 	notify-send "The bundle is ready for testing!"
 }
 
+testproperties ()
+{
+# Clean out old copy
+	echo -e "\e[44mCleaning out old properties files\e[0m"
+	rm -rf $cwd/public/master-portal/test.liferay.properties
+	rm -rf $cwd/private/7.1.x-portal/test.liferay.properties
+	rm -rf $cwd/private/7.0.x-portal/test.liferay.properties
+
+# Add new test.liferay.properties files
+	echo -e "\e[44mCopying to master\e[0m"
+	cp -r $cwd/resources/test.liferay.properties $cwd/public/master-portal
+	echo -e "\e[44mCopying to 7.1.x\e[0m"
+	cp -r $cwd/resources/test.liferay.properties $cwd/private/7.1.x-portal
+	echo -e "\e[44mCopying to 7.0.x\e[0m"
+	cp -r $cwd/resources/test.liferay.properties $cwd/private/7.0.x-portal
+	echo -e "\e[44mReady for testing!\e[0m"
+}
+
 #### Help documentation
 
 usage ()
@@ -263,6 +281,7 @@ usage ()
 	dl71               - Downloads the 7.1 CE GA3
 	dlmaster           - Downloads the latest master
 	rstaging           - Sets up remote staging where remote is 8080 and live is 9080
+	testproperties     - Deploys test.liferay.properties
 
 
 HELP_USAGE
