@@ -100,6 +100,12 @@ cluster ()
 	echo -e "\e[44mExtracting elastic search server into [$cwd]/elasticsearch-6.5.4\e[0m"
 	cp -r $cwd/resources/elasticsearch-6.5.4 $cwd/elasticsearch-6.5.4
 
+#Delete osgi state folder
+	echo -e "\e[44mDeleting the osgi state folder on node-1\e[0m"
+	rm -rf $cwd/node-1/osgi/state
+	echo -e "\e[44mDeleting the osgi state folder on node-2\e[0m"
+	rm -rf $cwd/node-2/osgi/state
+
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
 	echo -e "\e[44mYou are on Githash: $(cat node-1/tomcat-9.0.17/.githash)\e[0m"
 	echo -e "\e[44mTo start elastic search run /elasticsearch-6.5.4/bin/elasticsearch\e[0m"
@@ -141,6 +147,10 @@ dl71 ()
 	cp -r $cwd/bundles/7.1.x/liferay-ce-portal-7.1.2-ga3/* $cwd/7.1-ga3
 	echo -e "\e[44mCopying a basic portal-ext.properties over\e[0m"
 	cp -r $cwd/resources/portal-ext.properties $cwd/7.1-ga3
+
+#Delete osgi state folder
+	echo -e "\e[44mDeleting the osgi state folder\e[0m"
+	rm -rf $cwd/7.1-ga3/osgi/state
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
 	notify-send "The bundle is ready for testing!\e[0m"
 }
@@ -172,6 +182,10 @@ dlmaster ()
 	cp -r $cwd/bundles/master/liferay-portal-master/* $cwd/master
 	echo -e "\e[44mCopying a basic portal-ext.properties over\e[0m"
 	cp -r $cwd/resources/portal-ext.properties $cwd/master
+
+#Delete osgi state folder
+	echo -e "\e[44mDeleting the osgi state folder\e[0m"
+	rm -rf $cwd/master/osgi/state
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
 	echo -e "\e[44mYou are on Githash: $(cat master/tomcat-9.0.17/.githash)\e[0m"
 	notify-send "The bundle is ready for testing!"
@@ -213,6 +227,12 @@ rstaging ()
 	echo -e "\e[44mReplacing server.xml on master-live.\e[0m"
 	rm -rf $cwd/master-live/tomcat-9.0.17/conf/server.xml
 	cp -r $cwd/resources/server.xml $cwd/master-live/tomcat-9.0.17/conf
+
+#Delete osgi state folder
+	echo -e "\e[44mDeleting the osgi state folder on live\e[0m"
+	rm -rf $cwd/master-live/osgi/state
+	echo -e "\e[44mDeleting the osgi state folder on staged\e[0m"
+	rm -rf $cwd/master-staged/osgi/state
 
 # Preparing Databases master-staged and master-live
 	echo -e "\e[44mPreparing databases master-staged and master-live\e[0m"
