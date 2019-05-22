@@ -57,10 +57,13 @@ cluster ()
 {
 	# Clean out old copy
 	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
-	clean
+	rm -rf $cwd/bundles/master/liferay-portal-master
+	rm -rf $cwd/node-1
+	rm -rf $cwd/node-2
 
 # Create directories that will be used
 	echo -e "\e[44mCreating folders for bundle backup if they don't exist\e[0m"
+	mkdir -p bundles/master
 	mkdir -p node-1
 	mkdir -p node-2
 
@@ -124,7 +127,12 @@ dl71 ()
 {
 # Clean out old copy
 	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
-	clean
+	rm -rf $cwd/bundles/7.1.x/liferay-ce-portal-7.1.2-ga3
+	rm -rf $cwd/7.1-ga3
+
+# Create directories that will be used
+	echo -e "\e[44mCreating folders for bundle backup if they don't exist\e[0m"
+	mkdir -p bundles/7.1.x
 	mkdir -p 7.1-ga3
 
 # Check if 7.1-ga3 has already been downlaoded and if not, download it
@@ -159,7 +167,12 @@ dl71x ()
 {
 # Clean out old copy
 	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
-	clean
+	rm -rf $cwd/bundles/7.1.x/liferay-portal-7.1.x
+	rm -rf $cwd/7.1.x
+
+# Create directories that will be used
+	echo -e "\e[44mCreating folders for bundle backup if they don't exist\e[0m"
+	mkdir -p bundles/7.1.x
 	mkdir -p 7.1.x
 
 # Check if 7.1.x has already been downlaoded and if not, download it
@@ -195,7 +208,7 @@ dlmaster ()
 # Clean out old copy
 	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
 	rm -rf $cwd/bundles/master/liferay-portal-master
-	clean
+	rm -rf $cwd/master
 
 # Create directories that will be used
 	echo -e "\e[44mCreating folders for bundle backup if they don't exist\e[0m"
@@ -231,7 +244,8 @@ rstaging ()
 # Clean out old copy
 	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
 	rm -rf $cwd/bundles/master/liferay-portal-master
-	clean
+	rm -rf $cwd/master-live
+	rm -rf $cwd/master-staged
 
 # Create directories that will be used
 	echo -e "\e[44mCreating folders for bundle backup if they don't exist\e[0m"
