@@ -155,6 +155,41 @@ dl71 ()
 	notify-send "The bundle is ready for testing!\e[0m"
 }
 
+dl71x ()
+{
+# Clean out old copy
+	echo -e "\e[44mCleaning out old extracted binaries/folders\e[0m"
+	clean
+	mkdir -p 7.1.x
+
+# Check if 7.1.x has already been downlaoded and if not, download it
+	echo -e "\e[44mChecking if 7.1.x was already downloaded\e[0m"
+
+	DIRECTORY=$cwd/bundles/7.1.x/liferay-portal-tomcat-7.1.x
+	if [[ -d "$DIRECTORY" ]]; then
+		echo -e "\e[44mFound a copy of 7.1.x. Copying it to the working directory $cwd/7.1.x\e[0m"
+	else
+		echo -e "\e[44mDownloading the 7.1.x because it wasn't found\e[0m"
+		wget -c -N https://releases.liferay.com/portal/snapshot-7.1.x/latest/liferay-portal-tomcat-7.1.x.7z -P $cwd/bundles/7.1.x
+		echo -e "\e[44mDone downloading or checking\e[0m"
+# Extract the new bundle
+		echo -e "\e[44mDeleting old bundle if it exists\e[0m"
+		rm -rf $cwd/bundles/7.1.x/liferay-portal-tomcat-7.1.x
+		echo -e "\e[44mExtracting the 7.1.x bundle\e[0m"
+		7z x $cwd/bundles/7.1.x/liferay-portal-tomcat-7.1.x.7z -O$cwd/bundles/7.1.x
+	fi
+	echo -e "\e[44mCopying it over to the working directory [$cwd]/7.1.x\e[0m"
+	cp -r $cwd/bundles/7.1.x/liferay-portal-7.1.x/* $cwd/7.1.x
+	echo -e "\e[44mCopying a basic portal-ext.properties over\e[0m"
+	cp -r $cwd/resources/portal-ext.properties $cwd/7.1.x
+
+#Delete osgi state folder
+	echo -e "\e[44mDeleting the osgi state folder\e[0m"
+	rm -rf $cwd/7.1.x/osgi/state
+	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
+	notify-send "The bundle is ready for testing!\e[0m"
+}
+
 dlmaster ()
 {
 # Clean out old copy
@@ -279,6 +314,7 @@ usage ()
 	cluster		   - Sets up a clean 2 cluster node
 	createdb           - Creates the database
 	dl71               - Downloads the 7.1 CE GA3
+	dl71x              - Downloads the latest 7.1.x
 	dlmaster           - Downloads the latest master
 	rstaging           - Sets up remote staging where remote is 8080 and live is 9080
 	testproperties     - Deploys test.liferay.properties
