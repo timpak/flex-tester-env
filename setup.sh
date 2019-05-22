@@ -21,7 +21,7 @@
 clean ()
 {
 	echo -e "\e[44mDeletes everything but bundles, resources and setup.sh\e[0m"
-	rm -rf `ls | grep -v "resources\|setup.sh"`
+	rm -rf `ls | grep -v ".git\|resources\|setup.sh"`
 }
 
 cleandb ()
