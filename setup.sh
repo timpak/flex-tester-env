@@ -296,17 +296,17 @@ testproperties ()
 {
 # Clean out old copy
 	echo -e "\e[44mCleaning out old properties files\e[0m"
-	rm -rf $cwd/public/master-portal/test.liferay.properties
-	rm -rf $cwd/private/7.1.x-portal/test.liferay.properties
-	rm -rf $cwd/private/7.0.x-portal/test.liferay.properties
+	rm -rf $cwd/../public/master-portal/test.liferay.properties
+	rm -rf $cwd/../private/7.1.x-portal/test.liferay.properties
+	rm -rf $cwd/../private/7.0.x-portal/test.liferay.properties
 
 # Add new test.liferay.properties files
 	echo -e "\e[44mCopying to master\e[0m"
-	cp -r $cwd/resources/test.liferay.properties $cwd/public/master-portal
+	cp -r $cwd/resources/test.liferay.properties $cwd/../public/master-portal
 	echo -e "\e[44mCopying to 7.1.x\e[0m"
-	cp -r $cwd/resources/test.liferay.properties $cwd/private/7.1.x-portal
+	cp -r $cwd/resources/test.liferay.properties $cwd/../private/7.1.x-portal
 	echo -e "\e[44mCopying to 7.0.x\e[0m"
-	cp -r $cwd/resources/test.liferay.properties $cwd/private/7.0.x-portal
+	cp -r $cwd/resources/test.liferay.properties $cwd/../private/7.0.x-portal
 	echo -e "\e[44mReady for testing!\e[0m"
 }
 
