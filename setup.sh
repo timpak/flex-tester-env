@@ -2,7 +2,7 @@
 
 #### Constants
 
-# set current working directory
+# Set current working directory
 	cwd=$(pwd)
 
 # Create bundle folders
@@ -20,7 +20,7 @@
 
 clean ()
 {
-	echo -e "\e[44mDeletes everything but bundles, resources and setup.sh\e[0m"
+	echo -e "\e[44mDeletes everything but .git, resources, and setup.sh\e[0m"
 	rm -rf `ls | grep -v ".git\|resources\|setup.sh"`
 }
 
@@ -67,7 +67,7 @@ cluster ()
 	mkdir -p node-1
 	mkdir -p node-2
 
-# Check if a new master snapshot exists and download it
+# Check if a new master snapshot exists and if so, download it
 	echo -e "\e[44mDownloading the master snapshot if its updated\e[0m"
 	wget -c -N https://releases.liferay.com/portal/snapshot-master/latest/liferay-portal-tomcat-master.7z -P $cwd/bundles/master
 	echo -e "\e[44mDone downloading or checking\e[0m"
@@ -91,11 +91,11 @@ cluster ()
 	rm -rf $cwd/node-2/tomcat-9.0.17/conf/server.xml
 	cp -r $cwd/resources/server.xml $cwd/node-2/tomcat-9.0.17/conf
 
-# Preparing Databases master-staged and master-live
+# Prepare databases master-staged and master-live
 	echo -e "\e[44mPreparing database for the cluster\e[0m"
 	mysql -e "DROP DATABASE if exists lportal; create database lportal character set utf8;"
 
-# Preparing nodes to use a remote elastic search cluster
+# Prepare nodes to use a remote elastic search cluster
 	echo -e "\e[44mPreparing the nodes to use remote elastic search\e[0m"
 	echo -e "\e[44mCopying configs into osgi/configs for both nodes\e[0m"
 	cp -r $cwd/resources/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config $cwd/node-1/osgi/configs/com.liferay.portal.search.elasticsearch6.configuration.ElasticsearchConfiguration.config
@@ -103,10 +103,10 @@ cluster ()
 	echo -e "\e[44mExtracting elastic search server into [$cwd]/elasticsearch-6.5.4\e[0m"
 	cp -r $cwd/resources/elasticsearch-6.5.4 $cwd/elasticsearch-6.5.4
 
-#Delete osgi state folder
-	echo -e "\e[44mDeleting the osgi state folder on node-1\e[0m"
+#Delete the osgi/state folder
+	echo -e "\e[44mDeleting the osgi/state folder on node-1\e[0m"
 	rm -rf $cwd/node-1/osgi/state
-	echo -e "\e[44mDeleting the osgi state folder on node-2\e[0m"
+	echo -e "\e[44mDeleting the osgi/state folder on node-2\e[0m"
 	rm -rf $cwd/node-2/osgi/state
 
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
@@ -135,7 +135,7 @@ dl71 ()
 	mkdir -p bundles/7.1.x
 	mkdir -p 7.1-ga3
 
-# Check if 7.1-ga3 has already been downlaoded and if not, download it
+# Check if 7.1-ga3 has already been downloaded and if so, download it
 	echo -e "\e[44mChecking if 7.1 GA3 was already downloaded\e[0m"
 
 	DIRECTORY=$cwd/bundles/7.1.x/liferay-ce-portal-7.1.2-ga3
@@ -156,8 +156,8 @@ dl71 ()
 	echo -e "\e[44mCopying a basic portal-ext.properties over\e[0m"
 	cp -r $cwd/resources/portal-ext.properties $cwd/7.1-ga3
 
-#Delete osgi state folder
-	echo -e "\e[44mDeleting the osgi state folder\e[0m"
+#Delete the osgi/state folder
+	echo -e "\e[44mDeleting the osgi/state folder\e[0m"
 	rm -rf $cwd/7.1-ga3/osgi/state
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
 	notify-send "The bundle is ready for testing!\e[0m"
@@ -175,7 +175,7 @@ dl71x ()
 	mkdir -p bundles/7.1.x
 	mkdir -p 7.1.x
 
-# Check if 7.1.x has already been downlaoded and if not, download it
+# Check if 7.1.x has already been downloaded and if so, download it
 	echo -e "\e[44mChecking if 7.1.x was already downloaded\e[0m"
 
 	DIRECTORY=$cwd/bundles/7.1.x/liferay-portal-tomcat-7.1.x
@@ -196,8 +196,8 @@ dl71x ()
 	echo -e "\e[44mCopying a basic portal-ext.properties over\e[0m"
 	cp -r $cwd/resources/portal-ext.properties $cwd/7.1.x
 
-#Delete osgi state folder
-	echo -e "\e[44mDeleting the osgi state folder\e[0m"
+#Delete the osgi/state folder
+	echo -e "\e[44mDeleting the osgi/state folder\e[0m"
 	rm -rf $cwd/7.1.x/osgi/state
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
 	notify-send "The bundle is ready for testing!\e[0m"
@@ -215,7 +215,7 @@ dlmaster ()
 	mkdir -p bundles/master
 	mkdir -p master
 
-# Check if a new master snapshot exists and download it
+# Check if a new master snapshot exists and if so, download it
 	echo -e "\e[44mDownloading the master snapshot if its updated\e[0m"
 	wget -c -N https://releases.liferay.com/portal/snapshot-master/latest/liferay-portal-tomcat-master.7z -P $cwd/bundles/master
 	echo -e "\e[44mDone downloading or checking\e[0m"
@@ -231,8 +231,8 @@ dlmaster ()
 	echo -e "\e[44mCopying a basic portal-ext.properties over\e[0m"
 	cp -r $cwd/resources/portal-ext.properties $cwd/master
 
-#Delete osgi state folder
-	echo -e "\e[44mDeleting the osgi state folder\e[0m"
+#Delete the osgi/state folder
+	echo -e "\e[44mDeleting the osgi/state folder\e[0m"
 	rm -rf $cwd/master/osgi/state
 	echo -e "\e[44mThe bundle is ready for testing.\e[0m"
 	echo -e "\e[44mYou are on Githash: $(cat master/tomcat-9.0.17/.githash)\e[0m"
@@ -253,7 +253,7 @@ rstaging ()
 	mkdir -p master-staged
 	mkdir -p master-live
 
-# Check if a new master snapshot exists and download it
+# Check if a new master snapshot exists and if so, download it
 	echo -e "\e[44mDownloading the master snapshot if its updated\e[0m"
 	wget -c -N https://releases.liferay.com/portal/snapshot-master/latest/liferay-portal-tomcat-master.7z -P $cwd/bundles/master
 	echo -e "\e[44mDone downloading or checking\e[0m"
@@ -277,13 +277,13 @@ rstaging ()
 	rm -rf $cwd/master-live/tomcat-9.0.17/conf/server.xml
 	cp -r $cwd/resources/server.xml $cwd/master-live/tomcat-9.0.17/conf
 
-#Delete osgi state folder
-	echo -e "\e[44mDeleting the osgi state folder on live\e[0m"
+#Delete the osgi/state folder
+	echo -e "\e[44mDeleting the osgi/state folder on live\e[0m"
 	rm -rf $cwd/master-live/osgi/state
-	echo -e "\e[44mDeleting the osgi state folder on staged\e[0m"
+	echo -e "\e[44mDeleting the osgi/state folder on staged\e[0m"
 	rm -rf $cwd/master-staged/osgi/state
 
-# Preparing Databases master-staged and master-live
+# Prepare databases master-staged and master-live
 	echo -e "\e[44mPreparing databases master-staged and master-live\e[0m"
 	mysql -e "DROP DATABASE if exists master_staged; create database master_staged character set utf8;"
 	mysql -e "DROP DATABASE if exists master_live; create database master_live character set utf8;"
