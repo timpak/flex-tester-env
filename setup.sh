@@ -18,6 +18,17 @@
 
 #### Functions
 
+71toprivate ()
+{
+# Delete old bundle if it exists
+	echo -e "\e[44mDeleting old bundle\e[0m"
+	rm -rf $cwd/../private/bundles
+
+# Move 7.1.x bundle to private folder
+	echo -e "\e[44mMoving bundle to public\e[0m"
+	mv $cwd/../7.1.x $cwd/../private/bundles
+}
+
 clean ()
 {
 	echo -e "\e[44mDeletes everything but .git, resources, and setup.sh\e[0m"
@@ -239,6 +250,17 @@ dlmaster ()
 	notify-send "The bundle is ready for testing!"
 }
 
+mastertopublic ()
+{
+# Delete old bundle if it exists
+	echo -e "\e[44mDeleting old bundle\e[0m"
+	rm -rf $cwd/../public/bundles
+
+# Move master bundle to public folder
+	echo -e "\e[44mMoving bundle to public\e[0m"
+	mv $cwd/../master $cwd/../public/bundles
+}
+
 rstaging ()
 {
 # Clean out old copy
@@ -322,6 +344,7 @@ usage ()
 	Parameters
 	----------
 
+	71toprivate        - Move 7.1.x bundle to private folder
 	clean              - Deletes everything except bundles, resources and setup.sh
 	cleandb            - Cleans the database if it already exists
 	cleanmaster        - Doesn't download, just cleans up completely
@@ -330,6 +353,7 @@ usage ()
 	dl71               - Downloads the 7.1 CE GA3
 	dl71x              - Downloads the latest 7.1.x
 	dlmaster           - Downloads the latest master
+	mastertopublic     - Move master bundle to public folder
 	rstaging           - Sets up remote staging where remote is 8080 and live is 9080
 	testproperties     - Deploys test.liferay.properties
 
