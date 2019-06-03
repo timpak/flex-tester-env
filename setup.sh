@@ -26,7 +26,7 @@
 
 # Move 7.1.x bundle to private folder
 	echo -e "\e[44mMoving bundle to public\e[0m"
-	mv $cwd/../7.1.x $cwd/../private/bundles
+	mv $cwd/7.1.x $cwd/../private/bundles
 }
 
 clean ()
@@ -258,7 +258,7 @@ mastertopublic ()
 
 # Move master bundle to public folder
 	echo -e "\e[44mMoving bundle to public\e[0m"
-	mv $cwd/../master $cwd/../public/bundles
+	mv $cwd/master $cwd/../public/bundles
 }
 
 rstaging ()
